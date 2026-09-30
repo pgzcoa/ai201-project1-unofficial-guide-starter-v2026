@@ -58,22 +58,19 @@ in at least 4 of 5 tries.
 ## 4. Something about your chunks
 
 <!-- YOU WRITE THIS ONE.
-
+At least 4 out of 5 chunks I check should contain a complete piece of information without needing information from another chunk.
      How would you know if your chunks were the right size? Name something
      countable or observable.
 
      Examples of the right shape — don't copy these, they should come from
      what you actually saw in Milestone 3:
-       - "At least 4 of 5 sampled chunks read as a complete thought, with no
-          sentence cut in half at either end."
-       - "No chunk is shorter than 200 characters, since anything below that
-          in my corpus turned out to be a heading with no content under it." -->
+       At least 4 out of 5 chunks should give enough information to understand the topic without having to look at another chunk.
 
 
 
 **Why this target:**
 
-
+I chose this target because the campus-life chunks I looked at were short and usually contained the information needed by themselves.  I want most of my chunks to be complete enough to understand without reading another chunk.
 
 ---
 
@@ -81,17 +78,13 @@ in at least 4 of 5 tries.
 
 <!-- YOU WRITE THIS ONE TOO.
 
-     Pick something you actually care about getting right. It could be about
-     speed, about refusals, about a particular kind of question your corpus
-     handles badly, about source attribution being correct rather than merely
-     present — anything, as long as it names a number or an observable
-     outcome. -->
+     At least 4 out of 5 questions should return an answer that gives the specific fact I asked for.
 
 
 
 **Why this target:**
 
-
+I chose this because my questions are asking for specific information, such as how long something takes, when something happens, or how many required.  I want the system to answer the actual question instead of giving related information that does not answer it.
 
 ---
 
