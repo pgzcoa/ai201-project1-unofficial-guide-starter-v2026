@@ -129,7 +129,12 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 
 **Answer:**
 
-```
+```**Question:** When do students declare a major?
+
+**Answer:** Students declare at the end of their second semester, or later if needed.
+
+**Source:** `admin_declaring_a_major.txt`
+
 ```
 
 **My relevance cutoff:**
@@ -141,11 +146,23 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
      did those two groups look like? Where was the gap? Put the actual numbers
      here — the table below wants all ten rows.
 
+     I kept the cutoff at 0.6 because there was a clear gap between the questions my corpus covers and the questions that are out of scope.  The five covered questions had best distances from 0.221 to 0.380.  The five out-of-scope questions had best distances from 0.825 to 0.934.  The 0.6 cutoff falls between these two groups, so it separates the relevant questions from the unrelated questions. 
+
      Milestone 4. -->
 
 | Question | In corpus? | Best distance |
 |---|---|---|
-|  |  |  |
+|How long does an interlibrary loan request usually take?  | yes  | 0.380  |
+|When do students declare a major?                         | yes  | 0.372  |
+|How quickly do west-lot parking permits usually sell out? | yes  | 0.221  |
+|How many credit hours are required for graduation?        | yes  | 0.268  |
+|What is the best time to do laundry in Morrow House?	    | yes  | 0.305  |
+|What is the capital of Mongolia?	                        |  no	 | 0.825  |
+|How do I change the oil in a diesel engine?               |  no  | 0.934  |
+|Who won the 1994 World Cup?	                             |  no	 | 0.886  |
+|What is the recommended dosage of ibuprofen for a headache?| no	 | 0.844  |
+|How do I write a for loop in Rust?                        |  no  | 0.896  |
+
 
 ## How I Used AI
 
