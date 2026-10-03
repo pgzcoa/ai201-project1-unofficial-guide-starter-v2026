@@ -32,8 +32,8 @@ Replace this line  and which corpus you picked. -->
 
 ## Chunking Strategy
 
-**Chunk size:**
-**Overlap:**
+**Chunk size:** 1 complete post
+**Overlap:** 0
 
 I kept each campus-life post as one chunk because the posts are already short and usually contain a complete piece of information.  This avoids splitting a useful answer across multiple chunks.  The resulting chunks have an average length of about 317 characters, with the shortest at 178 characters, and the longest and 549 characters.  I used 0 to overlap because each post is kept intact and does not need information repeated from another chunk.
 
