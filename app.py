@@ -154,6 +154,7 @@ def cmd_retrieve(args):
         top_k=args.top_k or config.TOP_K,
         corpus=args.corpus or config.CORPUS,
         variant=args.variant,
+        source_filter=args.source,
     )
 
     if not results:
@@ -204,11 +205,13 @@ def ask_pipeline(
     from generate import answer_from_chunks, build_prompt
 
     results = search(
-        question,
-        top_k=top_k or config.TOP_K,
-        corpus=corpus or config.CORPUS,
-        variant=variant,
-    )
+    args.question,
+    top_k=args.top_k or config.TOP_K,
+    corpus=args.corpus or config.CORPUS,
+    variant=args.variant,
+    source_filter=args.source,
+)
+
     decision = gate.check(results, threshold=threshold)
     if on_gate is not None:
         on_gate(decision)
@@ -360,6 +363,7 @@ def build_parser():
     p_ret = sub.add_parser("retrieve", help="show distances only (Milestone 4)")
     p_ret.add_argument("question")
     p_ret.add_argument("--top-k", type=int)
+    p_ret.add_argument("--source", help="filter results to one source document")
     p_ret.set_defaults(func=cmd_retrieve)
 
     p_ask = sub.add_parser("ask", help="ask a question")

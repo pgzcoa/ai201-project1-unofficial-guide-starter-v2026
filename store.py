@@ -177,12 +177,12 @@ def build_index(
 
     return len(chunks)
 
-
 def search(
     question: str,
     top_k: int | None = None,
     corpus: str | None = None,
     variant: str = "default",
+    source_filter: str | None = None,
 ) -> list[Result]:
     """
     Retrieve the chunks closest in meaning to a question.
@@ -199,10 +199,15 @@ def search(
             f"No index called '{name}'. Run `python app.py index` first."
         ) from exc
 
-    raw = collection.query(
-        query_embeddings=embed([question]),
-        n_results=min(top_k, collection.count()),
-    )
+    query_options = {
+        "query_embeddings": embed([question]),
+        "n_results": min(top_k, collection.count()),
+    }
+
+    if source_filter:
+        query_options["where"] = {"source": source_filter}
+
+    raw = collection.query(**query_options)
 
     results: list[Result] = []
     for text, meta, distance in zip(
@@ -218,23 +223,3 @@ def search(
             )
         )
     return results
-
-
-def index_exists(corpus: str | None = None, variant: str = "default") -> bool:
-    """Is there an index here to search, without searching it?
-
-    `serve.py`'s health check asks this. It deliberately does not embed
-    anything: loading the embedding model takes 80 MB and a few seconds, and a
-    health check that heavy is a health check nobody can afford to call.
-    """
-    try:
-        collection = _client().get_collection(config.collection_name(corpus, variant))
-        return collection.count() > 0
-    except Exception:
-        return False
-
-
-def reset():
-    """Delete every index. Occasionally the fastest way out of a mess."""
-    if config.CHROMA_DIR.exists():
-        shutil.rmtree(config.CHROMA_DIR)
