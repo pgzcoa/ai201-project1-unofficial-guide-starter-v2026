@@ -26,6 +26,8 @@ Replace this line  and which corpus you picked. -->
      questions your system answers. Write it for someone who has never seen
      this repo.
 
+     This project is a retrieval-augmented question-answering system built using the campus_life corpus.  It retrieves information from campus-life documents and uses the most relevant documents to answer questions about topics such as academics, housing, dining, parking, and graduation requirements.  The system only answers questions when the retrieved information is relevant enough and uses the retrieved documents as the source for its answers. Questions outside the information covered by the corpus are rejected instead of being answered with guesses.
+
      Milestone 5. -->
 
 ## Chunking Strategy
@@ -175,15 +177,34 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 
      Milestone 5. -->
 
-**1.**
+**1.**to help troubleshoot dependency issues while setting up my project. When I encountered errors installing packages, I shared the error messages and got suggestions for resolving missing dependencies and Python version conflicts. I had conflicts going between 2 different python versions because one was not compatible.
 
-**2.**
+**2.**I followed the troubleshooting steps, checked that the packages were installed in my project's virtual environment, and verified that ChromaDB was working.
+
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
      claims earns nothing.
      ───────────────────────────────────────────────────────────────────────── -->
+**Stretch Feature: Metadata filtering**
 
+I am adding metadata filtering so retrieval can be narrowed by document source. I will compare the same query with and without a source filter and document how the retrieved results change.
+
+I tested the same question with and without a source filter.
+
+**Question:** When do students declare a major?
+
+**Without filter:**
+- `admin_declaring_a_major.txt` — distance 0.372
+- `admin_pass_fail_option.txt` — distance 0.509
+- `admin_graduation_requirements.txt` — distance 0.589
+- `admin_add_drop_deadline.txt` — distance 0.638
+- `admin_study_abroad.txt` — distance 0.682
+
+**With source filter:** `admin_declaring_a_major.txt`
+- `admin_declaring_a_major.txt` — distance 0.372
+
+**What changed:** Without the filter, retrieval returned five results from different documents. With the source filter, retrieval was narrowed to the specified document, so only `admin_declaring_a_major.txt` was returned. The relevant result and its distance stayed the same because it was already the closest match.
 ---
 
 # Unit 2
@@ -206,11 +227,11 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 5 of 5 |5 of 5  | 5 of 5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5  | 5 of 5  | MET |
+| 3. Gate stops out-of-corpus questions |4 of 5|5 of 5|5 of 5| 5 of 5  |MET|
+| 4.At least 4 of 5 chunks contain a complete piece of information|4 of 5|  4 of 5|4 of 5|4 of 5|MET|
+| 5.At least 4 of 5 test questions return the specific fact requested |4 of 5 |5 of 5 | 5 of 5 | 5 of 5  | 5 of 5 |MET
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
@@ -229,11 +250,11 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunk contains the answer |MET  |All five test questions retrieved information containing the fact needed to answer the question, exceeding the target of 4 of 5.  |
+| 2 |Every answer names a source  |MET | All five generated answers named a source document, meeting the target of 5 of 5.  |
+| 3 | Gate stops out-of-corpus questions |MET | The gate refused all 5 out of scope questions, exceeding the target of 4 of 5. |
+| 4 |At least 4 of 5 chunks contain a complete piece of information  | MET |My chunking review showed that at least 4 of the 5 checked chunks contained a complete piece of information without needing another chunk.  |
+| 5 |At least 4 0f 5 test questions return the specific fact requested | MET | All five test questions returned the specific fact requested, exceeding the target of 4 of 5 |
 
 ## Diagnoses
 
@@ -255,11 +276,13 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 
      Milestone 3. -->
 
+No criteria were missed in the before evaluation. The retrieval, generation, and relevance gate all met the targets I set. The five in-scope questions consistently retrieved the needed information, the generated answers named their sources, and the gate refused all five out-of-scope questions. Because there were no misses to diagnose, I did not identify a single failing stage that required correction.
+
 ## The Improvement
 
-**What I changed:**
+**What I changed:** I added metadata filtering to retrieval using the document source field.  The search() function now accepts an optional source filter, and the retrieve command supports the --source option.  I tested the same question with and without the filter.  Without the filter, five documents were retrieved; with the filter set to admin_declaring_a_major.txt, only that document was returned.
 
-**Why I picked it:**
+**Why I picked it:** I picked metadata filtering because the documents already had source metadata, so I could add a useful retrieval control without changing the embedding model or adding another dependency.  It also gives the user a way to narrow retrieval to a specific source document when needed. 
 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
@@ -271,11 +294,11 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 |5 of 5  |5 of 5  |5 of 5  |MET |
+| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5  |5 of 5  |MET  |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 |5 of 5 |5 of 5  | MET |
+| 4.At least 4 of 5 chunks contain a complete piece of information |4 of 5 |Use your manual chunk review |Use your manual chunk review |Use your manual chunk review |MET if review confirms |
+| 5.At least 4 of 5 test questions return the specific fact requested |4 of 5 |5 of 5 |5 of 5 |5 of 5 |MET |
 
 **Did it help?**
 
@@ -285,6 +308,9 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
      tell.
 
      Milestone 4. -->
+
+     The metadata filter worked the way I expected. Without the filter, the question returned five different documents. With the filter, it only returned the document I selected. The before and after results were the same because my evaluation did not use the new filter. The system still answered all five questions correctly and rejected all five questions that were outside the campus information. The filter gives me more control over which document is used, but it did not change the results of my regular evaluation.
+
 
 ## What's Still Broken
 
@@ -296,9 +322,15 @@ Laundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building
 
      Milestone 5. -->
 
+     One thing I still need to work on is automatic scoring. I have not created the `scorer.py` file yet, so I had to look at the answers myself to decide if they met my criteria.I also only tested five questions. The results were consistent, but testing more questions would give me a better idea of how well the system works. I stopped here because the main goal for this milestone was to add and test the metadata filtering feature.
+
+
 ## What I'd Do Differently
 
 <!-- Knowing what you know now — which of your five criteria would you write
      differently, and why?
 
      Milestone 5. -->
+
+     I would make some of my criteria more specific. For example, instead of just checking if the retrieved chunk is related to the question, I would check if it actually contains the information needed to answer the question. I would also test more questions instead of only five. This would give me more information about how well my system works with different types of questions. I would keep my criteria about giving the correct answer and checking the quality of the chunks because I think those are important parts of the project.
+
