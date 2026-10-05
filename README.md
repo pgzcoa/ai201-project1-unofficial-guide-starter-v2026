@@ -237,6 +237,77 @@ I tested the same question with and without a source filter.
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
 
+     Week 2 Unit 2 Run Logs
+
+| Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. Retrieved chunk contains the answer |4 of 5|5 of 5|5 of 5|5 of 5| MET |
+| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 3. Gate stops out-of-corpus questions |4 of 5|5 of 5|5 of 5|5 of 5| MET |
+| 4. At least 4 of 5 chunks contain a complete piece of information | 4 of 5 | Manual: 4 of 5 | Manual: 4 of 5 | Manual: 4 of 5 | MET |
+| 5. At least 4 of 5 test questions return the specific fact requested | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+
+### Evidence from the Before Run
+
+The results below are from `results/run_2026-10-04_0159_before.md`, produced by `run_eval.py::main`. I used one run from each question as evidence for the criteria.
+
+**Criterion 1 — Retrieved chunk contains the answer**
+
+Question: How long does an interlibrary loan request usually take?
+
+```text
+Requests through the interlibrary system take about a week (Source: admin_library_holds.txt).
+
+**Criterion 2 — Every answer names a source**
+
+Question: When do students declare a major?
+
+```text
+Students declare a major at the end of their second semester, or later if needed.
+
+Source: admin_declaring_a_major.txt
+```
+
+The answer includes the source document.
+
+**Criterion 3 — Gate stops out-of-corpus questions**
+
+Question: How do I write a for loop in Rust?
+
+```text
+refused (best distance 0.896)
+```
+
+The gate refused the question because it was outside the campus-life information in the corpus.
+
+**Criterion 3 — Gate stops out-of-corpus questions**
+
+Question: How do I write a for loop in Rust?
+
+```text
+refused (best distance 0.896)
+```
+
+The gate refused the question because it was outside the campus-life information in the corpus.
+
+**Criterion 4 — At least 4 of 5 chunks contain a complete piece of information**
+
+I checked five chunks manually. Four of the five contained a complete piece of information without needing another chunk, so this criterion met the target of 4 of 5.
+
+**Criterion 5 — At least 4 of 5 test questions return the specific fact requested**
+
+Question: How many credit hours are required for graduation?
+
+```text id="j5j2mb"
+120 credit hours are required for graduation.
+
+Source: admin_graduation_requirements.txt
+```
+
+The answer gives the specific number the question asked for.
+
+
+
 ## Verdicts
 
 <!-- MET or MISSED for each of the five, against the target you wrote last
@@ -277,6 +348,10 @@ I tested the same question with and without a source filter.
      Milestone 3. -->
 
 No criteria were missed in the before evaluation. The retrieval, generation, and relevance gate all met the targets I set. The five in-scope questions consistently retrieved the needed information, the generated answers named their sources, and the gate refused all five out-of-scope questions. Because there were no misses to diagnose, I did not identify a single failing stage that required correction.
+
+Unit 2 Milestone 3 Diagnoses
+
+I did not miss any of the five criteria in the before test.  All five met the goals I set in Unit 1.  The questions were able to find the information needed, the answers included the source, and the system stopped questions that were not related to the campus-life information.  Since I did not miss any criteria, I think Criterion 1 could have been a little harder.  I would make the target stricter by requiring the top result to contain the information needed to answer all 5 questions. This would give me a better way to test if system is finding the right information. 
 
 ## The Improvement
 

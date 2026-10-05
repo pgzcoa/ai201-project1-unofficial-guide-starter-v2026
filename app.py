@@ -151,11 +151,11 @@ def cmd_retrieve(args):
 
     results = search(
         args.question,
-        top_k=args.top_k or config.TOP_K,
+        top_k=args.top_k,
         corpus=args.corpus or config.CORPUS,
         variant=args.variant,
         source_filter=args.source,
-    )
+    )     
 
     if not results:
         print("Nothing came back. Have you run `python app.py index`?")
@@ -205,12 +205,11 @@ def ask_pipeline(
     from generate import answer_from_chunks, build_prompt
 
     results = search(
-    args.question,
-    top_k=args.top_k or config.TOP_K,
-    corpus=args.corpus or config.CORPUS,
-    variant=args.variant,
-    source_filter=args.source,
-)
+        question,
+        top_k=top_k or config.TOP_K,
+        corpus=corpus or config.CORPUS,
+        variant=variant,
+    )
 
     decision = gate.check(results, threshold=threshold)
     if on_gate is not None:
