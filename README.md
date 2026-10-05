@@ -327,6 +327,7 @@ The answer gives the specific number the question asked for.
 | 4 |At least 4 of 5 chunks contain a complete piece of information  | MET |My chunking review showed that at least 4 of the 5 checked chunks contained a complete piece of information without needing another chunk.  |
 | 5 |At least 4 0f 5 test questions return the specific fact requested | MET | All five test questions returned the specific fact requested, exceeding the target of 4 of 5 |
 
+
 ## Diagnoses
 
 <!-- For each miss: which stage caused it, and how. The stage alone isn't
@@ -365,13 +366,38 @@ I did not miss any of the five criteria in the before test.  All five met the go
 
 Improvement Unit 2 improvement Part 2
 
-**What I changed:**
+*What I changed:***
 
 I added conversational memory so the system can remember the question that came before it. This allows a second question to build on the first question instead of treating it as a completely new question. I will test this by asking a first question and then asking a follow-up question that depends on the first question.
 
 **Why I picked it:**
 
 I picked conversational memory because Criterion 1 could have been a little harder. My original test showed that the system could find the information needed for the questions, but I wanted to test how well it could handle questions that depend on previous information. This improvement gives me another way to test whether the system can understand what the user is asking in a conversation.
+
+### Before Test Unit 2 Part 2
+
+*What I changed:***
+I added conversational memory to the interactive question mode. The system now keeps the previous question and uses it when the user asks a follow-up question. This allows the second question to use information from the first question instead of treating it as a completely new question.
+
+
+**Why I picked it:**
+I tested the system with two questions. First I asked, “When do students declare a major?” and the system found the correct source. I then asked, “What about if I need more time?” The system did not remember the first question and said it did not have enough information. This showed that the system was treating the second question as a new question instead of a follow-up.
+
+## After the test Unit 2 Part 2
+
+### After Test
+
+I tested the same two questions again after adding conversational memory. First I asked, “When do students declare a major?” and the system found the correct source. I then asked, “What about if I need more time?” This time the system understood that the second question was a follow-up and answered that students can declare later if they need more time. It also retrieved `admin_declaring_a_major.txt`.
+
+### Before vs. After
+
+| Test                                                | Before                                                                     | After                                                                                                  |
+| --------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| First question: “When do students declare a major?” | Correct answer and source                                                  | Correct answer and source                                                                              |
+| Follow-up: “What about if I need more time?”        | Did not understand the follow-up and said there was not enough information | Correctly understood the follow-up and answered that students can declare later if they need more time |
+
+**Result:** Before the improvement, the follow-up question did not work. After adding conversational memory, the follow-up worked and returned the correct information from `admin_declaring_a_major.txt`.
+
 
 
 ### Run Log — After
@@ -409,6 +435,12 @@ I picked conversational memory because Criterion 1 could have been a little hard
      Milestone 5. -->
 
      One thing I still need to work on is automatic scoring. I have not created the `scorer.py` file yet, so I had to look at the answers myself to decide if they met my criteria.I also only tested five questions. The results were consistent, but testing more questions would give me a better idea of how well the system works. I stopped here because the main goal for this milestone was to add and test the metadata filtering feature.
+
+     Unit 2 Part 2
+
+     ## What’s Still Broken
+
+One thing I still need to work on is automatic scoring. I have not created the `scorer.py` file yet, so I had to look at the answers myself to decide if they met my criteria.  I also only tested a small number of questions. The conversational memory test worked, but testing more follow-up questions would give me a better idea of how well the system handles different conversations.
 
 
 ## What I'd Do Differently

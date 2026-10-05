@@ -300,6 +300,7 @@ def cmd_ask(args):
             )
         else:
             print("Ask a question, or press Enter on an empty line to quit.\n")
+            previous_question = None
             while True:
                 try:
                     question = input("> ").strip()
@@ -308,14 +309,22 @@ def cmd_ask(args):
                     break
                 if not question:
                     break
+
+                if previous_question:
+                    question_with_context = previous_question + " " + question
+                else:
+                    question_with_context = question
+
                 _ask_one(
-                    question,
+                    question_with_context,
                     corpus,
                     args.variant,
                     args.top_k,
                     args.threshold,
                     show_prompt=args.show_prompt,
                 )
+
+                previous_question = question
     finally:
         print(gen.usage())
 
