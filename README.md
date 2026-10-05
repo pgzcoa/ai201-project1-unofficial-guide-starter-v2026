@@ -353,6 +353,7 @@ Unit 2 Milestone 3 Diagnoses
 
 I did not miss any of the five criteria in the before test.  All five met the goals I set in Unit 1.  The questions were able to find the information needed, the answers included the source, and the system stopped questions that were not related to the campus-life information.  Since I did not miss any criteria, I think Criterion 1 could have been a little harder.  I would make the target stricter by requiring the top result to contain the information needed to answer all 5 questions. This would give me a better way to test if system is finding the right information. 
 
+
 ## The Improvement
 
 **What I changed:** I added metadata filtering to retrieval using the document source field.  The search() function now accepts an optional source filter, and the retrieve command supports the --source option.  I tested the same question with and without the filter.  Without the filter, five documents were retrieved; with the filter set to admin_declaring_a_major.txt, only that document was returned.
@@ -362,8 +363,18 @@ I did not miss any of the five criteria in the before test.  All five met the go
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
 
-### Run Log — After
+Improvement Unit 2 improvement Part 2
 
+**What I changed:**
+
+I added conversational memory so the system can remember the question that came before it. This allows a second question to build on the first question instead of treating it as a completely new question. I will test this by asking a first question and then asking a follow-up question that depends on the first question.
+
+**Why I picked it:**
+
+I picked conversational memory because Criterion 1 could have been a little harder. My original test showed that the system could find the information needed for the questions, but I wanted to test how well it could handle questions that depend on previous information. This improvement gives me another way to test whether the system can understand what the user is asking in a conversation.
+
+
+### Run Log — After
 <!-- Same format, same five criteria, three runs each.
      `python run_eval.py --label after` -->
 
